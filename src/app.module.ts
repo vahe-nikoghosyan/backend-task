@@ -3,21 +3,21 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { RabbitmqService } from './rabbitmq/rabbitmq.service';
+import { RabbitMQService } from './services/rabbitmq/rabbitmq.service';
 import { UsersModule } from './users/users.module';
-
-const DEFAULT_MONGODB_URL = 'mongodb://localhost:27017/nest-task';
-
+import { ReqresService } from './services/reqres/reqres.service';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env',
+      load: [configuration],
+      isGlobal: true,
     }),
-    MongooseModule.forRoot(process.env.MONGODB_URI || DEFAULT_MONGODB_URL),
+    MongooseModule.forRoot(configuration().database.uri),
     UsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService, RabbitmqService],
+  providers: [AppService, RabbitMQService, ReqresService],
 })
 export class AppModule {}

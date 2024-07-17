@@ -1,73 +1,184 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
+# NestJS Backend Task
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This project is a simple REST application built using the NestJS framework. It interacts with the Reqres API and includes CRUD operations for users, along with handling user avatars.
+
+## File Structure
+
+```
+src/
+├── app.module.ts
+├── main.ts
+├── config/
+│   ├── configuration.ts
+├── services/
+│   ├── reqres.service.ts
+│   ├── reqres.service.spec.ts
+├── mocks/
+│   ├── reqres.mock.ts
+├── users/
+│   ├── dto/
+│   │   ├── create-user.dto.ts
+│   ├── schemas/
+│   │   ├── user.schema.ts
+│   ├── users.controller.ts
+│   ├── users.controller.spec.ts
+│   ├── users.module.ts
+│   ├── users.service.ts
+│   ├── users.service.spec.ts
+```
 
 ## Installation
 
-```bash
-$ yarn install
-```
+1. **Clone the repository**
 
-## Running the app
+   ```bash
+   git clone https://github.com/vahe-nikoghosyan/backend-task.git
+   cd backend-task
+   ```
 
-```bash
-# development
-$ yarn run start
+2. **Install dependencies**
 
-# watch mode
-$ yarn run start:dev
+   ```bash
+   npm install
+   ```
 
-# production mode
-$ yarn run start:prod
-```
+3. **Set up environment variables**
 
-## Test
+   Create a `.env` file in the root directory with the following content:
 
-```bash
-# unit tests
-$ yarn run test
+   ```env
+   PORT=3000
+   MONGO_URI=mongodb://localhost/nest
+   REQRES_API_URL=https://reqres.in/api
+   RABBITMQ_URL=amqp://localhost
+   ```
 
-# e2e tests
-$ yarn run test:e2e
+## Running the Application
 
-# test coverage
-$ yarn run test:cov
-```
+### Local Development
 
-## Support
+1. **Start MongoDB**
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+   Ensure MongoDB is installed and running on your machine. If not, you can install it using Homebrew (macOS) or by following the installation instructions for your operating system from the [official MongoDB documentation](https://docs.mongodb.com/manual/installation/).
 
-## Stay in touch
+   ```bash
+   brew tap mongodb/brew
+   brew install mongodb-community@7.0
+   brew services start mongodb-community
+   ```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+   Alternatively, you can use Docker to run MongoDB:
+
+   ```bash
+   docker run -d -p 27017:27017 --name mongodb mongo:latest
+   ```
+
+2. **Start RabbitMQ**
+
+   Ensure RabbitMQ is installed and running on your machine. If not, you can install it using Homebrew (macOS) or by following the installation instructions for your operating system from the [official RabbitMQ documentation](https://www.rabbitmq.com/download.html).
+
+   ```bash
+   brew install rabbitmq
+   brew services start rabbitmq
+   ```
+
+   Alternatively, you can use Docker to run RabbitMQ:
+
+   ```bash
+   docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+   ```
+
+3. **Start the NestJS Application**
+
+   ```bash
+   npm run start:dev
+   ```
+
+   The application will be running at `http://localhost:3000`.
+
+## Running Tests
+
+1. **Unit and Integration Tests**
+
+   ```bash
+   npm run test
+   ```
+
+2. **End-to-End Tests**
+
+   ```bash
+   npm run test:e2e
+   ```
+
+## API Endpoints
+
+1. **Create User**
+
+   ```http
+   POST /api/users
+   ```
+
+   Request Body:
+
+   ```json
+   {
+     "name": "John Doe",
+     "email": "john.doe@example.com",
+     "avatar": "https://reqres.in/img/faces/1-image.jpg"
+   }
+   ```
+
+2. **Get User by ID**
+
+   ```http
+   GET /api/users/:userId
+   ```
+
+3. **Get User Avatar**
+
+   ```http
+   GET /api/users/:userId/avatar
+   ```
+
+4. **Delete User Avatar**
+
+   ```http
+   DELETE /api/users/:userId/avatar
+   ```
+
+## Contributing
+
+1. **Fork the repository**
+
+2. **Create a new branch**
+
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+
+3. **Make your changes**
+
+4. **Commit your changes**
+
+   ```bash
+   git commit -m "Add some feature"
+   ```
+
+5. **Push to the branch**
+
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+
+6. **Create a pull request**
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+This project is licensed under the MIT License.
+
+---
+
